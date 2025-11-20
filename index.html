@@ -1,1 +1,151 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta-name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cactus Hill Raceway – Standings</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Banner -->
+<header class="banner">
+    <img src="images/logo.png" alt="Cactus Hill Logo" class="banner-logo">
+    <div class="banner-content">
+        <h1>Cactus Hill Raceway</h1>
+        <h2>Season Standings</h2>
+    </div>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a href="index.html">Standings</a>
+    <a href="results.html">Race Results</a>
+    <a href="rules.html">Rules</a>
+</nav>
+
+<p class="updated">Last updated: 01/01/2025</p>
+
+<!-- Leaderboard -->
+<div class="table-container">
+    <table class="leaderboard">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Racer</th>
+                <th>Points</th>
+                <th>Wins</th>
+                <th>Change in Position</th>
+            </tr>
+        </thead>
+        <tbody id="standings-body"></tbody>
+    </table>
+</div>
+
+<!-- Standings Script -->
+<script>
+// --------------------------
+// 1. PREVIOUS STANDINGS
+// Update these with the TOTALS from BEFORE the NEW race.
+// --------------------------
+const previousStandings = [
+    { name: "Braidyn", points: 30, wins: 1 },
+    { name: "Chris", points: 32, wins: 1 },
+    { name: "Conor", points: 12, wins: 0 },
+    { name: "Paul", points: 10, wins: 0 },
+    { name: "Scott", points: 9, wins: 0 },
+    { name: "Andy", points: 5, wins: 0 },
+    { name: "Maples", points: 1, wins: 0 }
+];
+
+// --------------------------
+// 2. CURRENT STANDINGS
+// Update these after the race with NEW TOTALS.
+// --------------------------
+const currentStandings = [
+    { name: "Braidyn", points: 40, wins: 2 },
+    { name: "Chris", points: 32, wins: 1 },
+    { name: "Conor", points: 18, wins: 0 },
+    { name: "Paul", points: 40, wins: 0 },
+    { name: "Scott", points: 18, wins: 0 },
+    { name: "Andy", points: 18, wins: 0 },
+    { name: "Maples", points: 18, wins: 0 }
+];
+
+// --------------------------
+// 3. SORT CURRENT STANDINGS
+// --------------------------
+currentStandings.sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    return b.wins - a.wins; 
+});
+
+// Assign new positions
+currentStandings.forEach((r, i) => r.position = i + 1);
+
+// --------------------------
+// 4. CALCULATE MOVEMENT (Δ)
+// --------------------------
+currentStandings.forEach(racer => {
+    const old = previousStandings.find(x => x.name === racer.name);
+
+    // New racer
+    if (!old) {
+        racer.movement = "NEW";
+        return;
+    }
+
+    const oldPos = previousStandings.indexOf(old) + 1;
+    const newPos = racer.position;
+
+    if (newPos < oldPos) {
+        racer.movement = "+" + (oldPos - newPos);
+    } 
+    else if (newPos > oldPos) {
+        racer.movement = "-" + (newPos - oldPos);
+    } 
+    else {
+        racer.movement = "0";
+    }
+});
+
+// --------------------------
+// 5. RENDER TABLE
+// --------------------------
+const tbody = document.getElementById("standings-body");
+
+currentStandings.forEach(r => {
+    let movementDisplay = r.movement;
+
+    if (r.movement.startsWith("+")) {
+        movementDisplay = `<span style="color:#0A8A0A;font-weight:bold">${r.movement}</span>`;
+    }
+    else if (r.movement.startsWith("-")) {
+        movementDisplay = `<span style="color:#C40000;font-weight:bold">${r.movement}</span>`;
+    }
+    else if (r.movement === "NEW") {
+        movementDisplay = `<span style="color:#D4A017;font-weight:bold">NEW</span>`;
+    }
+    else {
+        movementDisplay = `<span style="color:#777">0</span>`;
+    }
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${r.position}</td>
+        <td>${r.name}</td>
+        <td>${r.points}</td>
+        <td>${r.wins}</td>
+        <td>${movementDisplay}</td>
+    `;
+    tbody.appendChild(row);
+});
+</script>
+
+</body>
+</html>
