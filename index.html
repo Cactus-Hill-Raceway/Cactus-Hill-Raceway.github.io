@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta-name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cactus Hill Raceway – Standings</title>
 
     <!-- Fonts -->
@@ -15,7 +15,7 @@
 
 <!-- Banner -->
 <header class="banner">
-    <img src="images/logo.PNG" alt="Cactus Hill Logo" class="banner-logo">
+    <img src="images/logo.png" alt="Cactus Hill Logo" class="banner-logo">
     <div class="banner-content">
         <h1>Cactus Hill Raceway</h1>
         <h2>Season Standings</h2>
@@ -31,8 +31,40 @@
 
 <p class="updated">Last updated: 01/01/2025</p>
 
-<!-- Leaderboard -->
+<!-- =================================================== -->
+<!--  TABLE 1: CHAMPIONSHIP QUALIFYING PROGRESS          -->
+<!-- =================================================== -->
 <div class="table-container">
+    <h2 style="text-align:center; margin-top:0;">Championship Qualifying Progress</h2>
+    <p style="text-align:center; margin-bottom:15px;">
+        Must attend <strong>8</strong> of the final <strong>14</strong> races to qualify.
+    </p>
+
+    <table class="leaderboard">
+        <thead>
+            <tr>
+                <th>Racer</th>
+                <th>Races Attended</th>
+                <th>% to Qualify</th>
+            </tr>
+        </thead>
+        <tbody id="qualifying-body"></tbody>
+    </table>
+</div>
+
+<!-- =================================================== -->
+<!--  SEPARATOR BAR: NOT VALID UNTIL JAN 1ST             -->
+<!-- =================================================== -->
+<div class="section-separator">
+    <h2>Season Points & Stats – Not valid until Jan 1st</h2>
+</div>
+
+<!-- =================================================== -->
+<!--  TABLE 2: POINTS STANDINGS                          -->
+<!-- =================================================== -->
+<div class="table-container">
+    <h2 style="text-align:center; margin-top:0;">Season Points Standings</h2>
+
     <table class="leaderboard">
         <thead>
             <tr>
@@ -40,61 +72,108 @@
                 <th>Racer</th>
                 <th>Points</th>
                 <th>Wins</th>
-                <th>Change in Position</th>
+                <th>Δ</th>
             </tr>
         </thead>
         <tbody id="standings-body"></tbody>
     </table>
 </div>
 
-<!-- Standings Script -->
+<!-- =================================================== -->
+<!--  TABLE 3: RACE STATS (ATTENDED / ROUND / EVENT WINS)-->
+<!-- =================================================== -->
+<div class="table-container">
+    <h2 style="text-align:center; margin-top:0;">Season Race Stats</h2>
+
+
+    <table class="leaderboard">
+        <thead>
+            <tr>
+                <th>Racer</th>
+                <th>Races Attended</th>
+                <th>Round Wins</th>
+                <th>Event Wins</th>
+            </tr>
+        </thead>
+        <tbody id="stats-body"></tbody>
+    </table>
+</div>
+
+<!-- =================================================== -->
+<!--  SCRIPTS                                            -->
+<!-- =================================================== -->
 <script>
-// --------------------------
-// 1. PREVIOUS STANDINGS
-// Update these with the TOTALS from BEFORE the NEW race.
-// --------------------------
-const previousStandings = [
-    { name: "Braidyn", points: 30, wins: 1 },
-    { name: "Chris", points: 32, wins: 1 },
-    { name: "Conor", points: 12, wins: 0 },
-    { name: "Paul", points: 10, wins: 0 },
-    { name: "Scott", points: 9, wins: 0 },
-    { name: "Andy", points: 5, wins: 0 },
-    { name: "Maples", points: 1, wins: 0 }
+// ░░ CONFIG ░░
+const REQUIRED_RACES = 8;
+
+// ===================================================
+//  MASTER RACER DATA (used for qualifying + stats)
+//  For this year you can set roundWins / eventWins = 0
+// ===================================================
+const racerStats = [
+    { name: "Paul",   attended: 18, roundWins: 0, eventWins: 0 },
+    { name: "Andy",   attended: 13, roundWins: 0, eventWins: 0 },
+    { name: "Scotty", attended: 15, roundWins: 0, eventWins: 0 },
+    { name: "Kitzy",  attended: 15, roundWins: 0, eventWins: 0 },
+    { name: "Maples", attended: 7,  roundWins: 0, eventWins: 0 },
+    { name: "Braidyn",attended: 6,  roundWins: 0, eventWins: 0 },
+    { name: "Conor",  attended: 16, roundWins: 0, eventWins: 0 },
+    { name: "Matt",   attended: 7,  roundWins: 0, eventWins: 0 },
+    { name: "Joey",   attended: 14, roundWins: 0, eventWins: 0 }
 ];
 
-// --------------------------
-// 2. CURRENT STANDINGS
-// Update these after the race with NEW TOTALS.
-// --------------------------
-const currentStandings = [
-    { name: "Braidyn", points: 40, wins: 2 },
-    { name: "Chris", points: 32, wins: 1 },
-    { name: "Conor", points: 18, wins: 0 },
-    { name: "Paul", points: 40, wins: 0 },
-    { name: "Scott", points: 18, wins: 0 },
-    { name: "Andy", points: 18, wins: 0 },
-    { name: "Maples", points: 18, wins: 0 }
-];
+// ===================================================
+//  TABLE 1: BUILD QUALIFYING PROGRESS
+// ===================================================
+const qualifyingBody = document.getElementById("qualifying-body");
 
-// --------------------------
-// 3. SORT CURRENT STANDINGS
-// --------------------------
-currentStandings.sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    return b.wins - a.wins; 
+racerStats.forEach(r => {
+    let percent = Math.round((r.attended / REQUIRED_RACES) * 100);
+    if (percent > 100) percent = 100;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${r.name}</td>
+        <td>${r.attended}</td>
+        <td>${percent}%</td>
+    `;
+    qualifyingBody.appendChild(row);
 });
 
-// Assign new positions
+// ===================================================
+//  TABLE 2: POINTS STANDINGS (FUTURE SYSTEM)
+// ===================================================
+const previousStandings = [
+    { name: "Braidyn", points: 30, wins: 1 },
+    { name: "Chris",   points: 32, wins: 1 },
+    { name: "Conor",   points: 12, wins: 0 },
+    { name: "Paul",    points: 10, wins: 0 },
+    { name: "Scott",   points: 9,  wins: 0 },
+    { name: "Andy",    points: 5,  wins: 0 },
+    { name: "Maples",  points: 1,  wins: 0 }
+];
+
+const currentStandings = [
+    { name: "Braidyn", points: 40, wins: 2 },
+    { name: "Chris",   points: 32, wins: 1 },
+    { name: "Conor",   points: 18, wins: 0 },
+    { name: "Paul",    points: 18, wins: 0 },
+    { name: "Scott",   points: 18, wins: 0 },
+    { name: "Andy",    points: 18, wins: 0 },
+    { name: "Maples",  points: 18, wins: 0 }
+];
+
+// Sort & position
+currentStandings.sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    return b.wins - a.wins;
+});
 currentStandings.forEach((r, i) => r.position = i + 1);
 
-// --------------------------
-// 4. CALCULATE MOVEMENT (Δ)
-// --------------------------
+// Movement Δ
 currentStandings.forEach(racer => {
     const old = previousStandings.find(x => x.name === racer.name);
 
-    // New racer
     if (!old) {
         racer.movement = "NEW";
         return;
@@ -105,33 +184,25 @@ currentStandings.forEach(racer => {
 
     if (newPos < oldPos) {
         racer.movement = "+" + (oldPos - newPos);
-    } 
-    else if (newPos > oldPos) {
+    } else if (newPos > oldPos) {
         racer.movement = "-" + (newPos - oldPos);
-    } 
-    else {
+    } else {
         racer.movement = "0";
     }
 });
 
-// --------------------------
-// 5. RENDER TABLE
-// --------------------------
-const tbody = document.getElementById("standings-body");
+const standingsBody = document.getElementById("standings-body");
 
 currentStandings.forEach(r => {
     let movementDisplay = r.movement;
 
     if (r.movement.startsWith("+")) {
         movementDisplay = `<span style="color:#0A8A0A;font-weight:bold">${r.movement}</span>`;
-    }
-    else if (r.movement.startsWith("-")) {
+    } else if (r.movement.startsWith("-")) {
         movementDisplay = `<span style="color:#C40000;font-weight:bold">${r.movement}</span>`;
-    }
-    else if (r.movement === "NEW") {
+    } else if (r.movement === "NEW") {
         movementDisplay = `<span style="color:#D4A017;font-weight:bold">NEW</span>`;
-    }
-    else {
+    } else {
         movementDisplay = `<span style="color:#777">0</span>`;
     }
 
@@ -143,10 +214,25 @@ currentStandings.forEach(r => {
         <td>${r.wins}</td>
         <td>${movementDisplay}</td>
     `;
-    tbody.appendChild(row);
+    standingsBody.appendChild(row);
+});
+
+// ===================================================
+//  TABLE 3: SEASON RACE STATS
+// ===================================================
+const statsBody = document.getElementById("stats-body");
+
+racerStats.forEach(r => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${r.name}</td>
+        <td>${r.attended}</td>
+        <td>${r.roundWins}</td>
+        <td>${r.eventWins}</td>
+    `;
+    statsBody.appendChild(row);
 });
 </script>
 
 </body>
 </html>
-

@@ -78,6 +78,7 @@ body {
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 40px;
 }
 
 .leaderboard {
@@ -139,4 +140,16 @@ h1, h2, h3, h4 {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
 }
+
+.section-separator {
+    max-width: 900px;
+    margin: 40px auto 30px; /* adds spacing above and below */
+    background: #0D3B2E;
+    color: #FAF6EF;
+    padding: 15px 20px;
+    border-radius: 999px;
+    text-align: center; /* THIS centers the text */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 
