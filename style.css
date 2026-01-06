@@ -173,7 +173,7 @@ h1, h2, h3, h4 {
 
 /* Makes only the champions card bigger */
 .champion-card {
-    width: min(720px, 95%);
+    width: min(480px, 95%);
 }
 
 .champion-card img {
@@ -181,6 +181,7 @@ h1, h2, h3, h4 {
     height: auto;
     display: block;
 }
+
 
 
 
