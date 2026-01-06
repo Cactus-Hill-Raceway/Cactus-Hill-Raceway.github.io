@@ -29,38 +29,10 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<p class="updated">Last updated: 12/09/2025</p>
+<p class="updated">Last updated: 01/06/2026</p>
 
 <!-- =================================================== -->
-<!--  TABLE 1: CHAMPIONSHIP QUALIFYING PROGRESS          -->
-<!-- =================================================== -->
-<div class="table-container">
-    <h2 style="text-align:center; margin-top:0;">2025 Championship Qualifying Progress</h2>
-    <p style="text-align:center; margin-bottom:15px;">
-        Must attend <strong>8</strong> of the final <strong>14</strong> races to qualify.
-    </p>
-
-    <table class="leaderboard">
-        <thead>
-            <tr>
-                <th>Racer</th>
-                <th>Races Attended</th>
-                <th>% to Qualify</th>
-            </tr>
-        </thead>
-        <tbody id="qualifying-body"></tbody>
-    </table>
-</div>
-
-<!-- =================================================== -->
-<!--  SEPARATOR BAR: NOT VALID UNTIL JAN 1ST             -->
-<!-- =================================================== -->
-<div class="section-separator">
-    <h2>Season Points & Stats – Not valid until Jan 1st</h2>
-</div>
-
-<!-- =================================================== -->
-<!--  TABLE 2: POINTS STANDINGS                          -->
+<!--  TABLE 1: POINTS STANDINGS                          -->
 <!-- =================================================== -->
 <div class="table-container">
     <h2 style="text-align:center; margin-top:0;">Season Points Standings</h2>
@@ -71,7 +43,7 @@
                 <th>#</th>
                 <th>Racer</th>
                 <th>Points</th>
-                <th>Wins</th>
+                <th>Event Wins</th>
                 <th>Δ</th>
             </tr>
         </thead>
@@ -80,11 +52,10 @@
 </div>
 
 <!-- =================================================== -->
-<!--  TABLE 3: RACE STATS (ATTENDED / ROUND / EVENT WINS)-->
+<!--  TABLE 2: RACE STATS                                -->
 <!-- =================================================== -->
-<div class="table-container">
+<div class="table-container" style="margin-top: 35px;">
     <h2 style="text-align:center; margin-top:0;">Season Race Stats</h2>
-
 
     <table class="leaderboard">
         <thead>
@@ -103,107 +74,95 @@
 <!--  SCRIPTS                                            -->
 <!-- =================================================== -->
 <script>
-// ░░ CONFIG ░░
-const REQUIRED_RACES = 8;
-
-// ===================================================
-//  MASTER RACER DATA (used for qualifying + stats)
-//  For this year you can set roundWins / eventWins = 0
-// ===================================================
-const racerStats = [
-    { name: "Paul",   attended: 19, roundWins: 0, eventWins: 0 },
-    { name: "Andy",   attended: 14, roundWins: 0, eventWins: 0 },
-    { name: "Scotty", attended: 16, roundWins: 0, eventWins: 0 },
-    { name: "Kitzy",  attended: 16, roundWins: 0, eventWins: 0 },
-    { name: "Maples", attended: 8,  roundWins: 0, eventWins: 0 },
-    { name: "Braidyn",attended: 7,  roundWins: 0, eventWins: 0 },
-    { name: "Conor",  attended: 17, roundWins: 0, eventWins: 0 },
-    { name: "Matt",   attended: 7,  roundWins: 0, eventWins: 0 },
-    { name: "Joey",   attended: 15, roundWins: 0, eventWins: 0 }
+/*
+=========================================================
+EDIT THIS SECTION ONLY DURING THE SEASON ✅
+- Add/remove drivers
+- Update attended / roundWins / eventWins / points
+=========================================================
+*/
+const drivers = [
+    { name: "Paul",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Andy",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Scotty",  attended: 0, roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Kitzy",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Maples",  attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Braidyn", attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Conor",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Matt",    attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
+    { name: "Joey",    attended: 0, roundWins: 0, eventWins: 0, points: 0 }
 ];
 
-// ===================================================
-//  TABLE 1: BUILD QUALIFYING PROGRESS
-// ===================================================
-const qualifyingBody = document.getElementById("qualifying-body");
-
-racerStats.forEach(r => {
-    let percent = Math.round((r.attended / REQUIRED_RACES) * 100);
-    if (percent > 100) percent = 100;
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${r.name}</td>
-        <td>${r.attended}</td>
-        <td>${percent}%</td>
-    `;
-    qualifyingBody.appendChild(row);
-});
-
-// ===================================================
-//  TABLE 2: POINTS STANDINGS (FUTURE SYSTEM)
-// ===================================================
+/*
+=========================================================
+OPTIONAL: Δ MOVEMENT TRACKING
+- Put last update’s ORDERED standings snapshot here.
+- You only need name + points + eventWins (for tie-break).
+- If you don’t care about Δ, set previousStandings = [].
+=========================================================
+*/
 const previousStandings = [
-    { name: "Braidyn", points: 30, wins: 1 },
-    { name: "Chris",   points: 32, wins: 1 },
-    { name: "Conor",   points: 12, wins: 0 },
-    { name: "Paul",    points: 10, wins: 0 },
-    { name: "Scott",   points: 9,  wins: 0 },
-    { name: "Andy",    points: 5,  wins: 0 },
-    { name: "Maples",  points: 1,  wins: 0 }
+    // Example:
+    // { name: "Chris", points: 120, eventWins: 2 },
+    // { name: "Braidyn", points: 110, eventWins: 1 }
 ];
 
-const currentStandings = [
-    { name: "Braidyn", points: 40, wins: 2 },
-    { name: "Chris",   points: 32, wins: 1 },
-    { name: "Conor",   points: 18, wins: 0 },
-    { name: "Paul",    points: 18, wins: 0 },
-    { name: "Scott",   points: 18, wins: 0 },
-    { name: "Andy",    points: 18, wins: 0 },
-    { name: "Maples",  points: 18, wins: 0 }
-];
+// ===================================================
+// Build CURRENT standings from drivers list
+// ===================================================
+const currentStandings = drivers.map(d => ({
+    name: d.name,
+    points: d.points,
+    eventWins: d.eventWins
+}));
 
-// Sort & position
+// Sort standings: Points desc, then Event Wins desc, then Name asc
 currentStandings.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
-    return b.wins - a.wins;
+    if (b.eventWins !== a.eventWins) return b.eventWins - a.eventWins;
+    return a.name.localeCompare(b.name);
 });
+
+// Assign positions
 currentStandings.forEach((r, i) => r.position = i + 1);
 
-// Movement Δ
-currentStandings.forEach(racer => {
-    const old = previousStandings.find(x => x.name === racer.name);
-
-    if (!old) {
-        racer.movement = "NEW";
+// Δ movement (based on position change)
+currentStandings.forEach(r => {
+    if (!previousStandings || previousStandings.length === 0) {
+        r.delta = "—";
         return;
     }
 
-    const oldPos = previousStandings.indexOf(old) + 1;
-    const newPos = racer.position;
-
-    if (newPos < oldPos) {
-        racer.movement = "+" + (oldPos - newPos);
-    } else if (newPos > oldPos) {
-        racer.movement = "-" + (newPos - oldPos);
-    } else {
-        racer.movement = "0";
+    const oldIndex = previousStandings.findIndex(x => x.name === r.name);
+    if (oldIndex === -1) {
+        r.delta = "NEW";
+        return;
     }
+
+    const oldPos = oldIndex + 1;
+    const newPos = r.position;
+
+    if (newPos < oldPos) r.delta = "+" + (oldPos - newPos);
+    else if (newPos > oldPos) r.delta = "-" + (newPos - oldPos);
+    else r.delta = "0";
 });
 
+// Render standings table
 const standingsBody = document.getElementById("standings-body");
 
 currentStandings.forEach(r => {
-    let movementDisplay = r.movement;
+    let deltaDisplay = r.delta;
 
-    if (r.movement.startsWith("+")) {
-        movementDisplay = `<span style="color:#0A8A0A;font-weight:bold">${r.movement}</span>`;
-    } else if (r.movement.startsWith("-")) {
-        movementDisplay = `<span style="color:#C40000;font-weight:bold">${r.movement}</span>`;
-    } else if (r.movement === "NEW") {
-        movementDisplay = `<span style="color:#D4A017;font-weight:bold">NEW</span>`;
+    if (r.delta && r.delta.startsWith("+")) {
+        deltaDisplay = `<span style="color:#0A8A0A;font-weight:bold">${r.delta}</span>`;
+    } else if (r.delta && r.delta.startsWith("-")) {
+        deltaDisplay = `<span style="color:#C40000;font-weight:bold">${r.delta}</span>`;
+    } else if (r.delta === "NEW") {
+        deltaDisplay = `<span style="color:#D4A017;font-weight:bold">NEW</span>`;
+    } else if (r.delta === "0") {
+        deltaDisplay = `<span style="color:#777">0</span>`;
     } else {
-        movementDisplay = `<span style="color:#777">0</span>`;
+        deltaDisplay = `<span style="color:#777">—</span>`;
     }
 
     const row = document.createElement("tr");
@@ -211,24 +170,29 @@ currentStandings.forEach(r => {
         <td>${r.position}</td>
         <td>${r.name}</td>
         <td>${r.points}</td>
-        <td>${r.wins}</td>
-        <td>${movementDisplay}</td>
+        <td>${r.eventWins}</td>
+        <td>${deltaDisplay}</td>
     `;
     standingsBody.appendChild(row);
 });
 
 // ===================================================
-//  TABLE 3: SEASON RACE STATS
+// Render stats table (sort by attended desc, then name)
 // ===================================================
 const statsBody = document.getElementById("stats-body");
 
-racerStats.forEach(r => {
+const statsSorted = [...drivers].sort((a, b) => {
+    if (b.attended !== a.attended) return b.attended - a.attended;
+    return a.name.localeCompare(b.name);
+});
+
+statsSorted.forEach(d => {
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td>${r.name}</td>
-        <td>${r.attended}</td>
-        <td>${r.roundWins}</td>
-        <td>${r.eventWins}</td>
+        <td>${d.name}</td>
+        <td>${d.attended}</td>
+        <td>${d.roundWins}</td>
+        <td>${d.eventWins}</td>
     `;
     statsBody.appendChild(row);
 });
@@ -236,6 +200,3 @@ racerStats.forEach(r => {
 
 </body>
 </html>
-
-
-
