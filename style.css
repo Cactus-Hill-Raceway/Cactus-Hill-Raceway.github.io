@@ -152,4 +152,36 @@ h1, h2, h3, h4 {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+.results-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 20px 10px;
+}
+
+.results-year {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 10px 0 18px;
+    font-size: 28px;
+}
+
+.champion-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 30px;
+}
+
+/* Makes only the champions card bigger */
+.champion-card {
+    width: min(720px, 95%);
+}
+
+.champion-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
 
