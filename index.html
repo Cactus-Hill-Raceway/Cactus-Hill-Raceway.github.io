@@ -29,7 +29,7 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<p class="updated">Last updated: 01/07/2026</p>
+<p class="updated">Last updated: 01/06/2026</p>
 
 <!-- =================================================== -->
 <!--  TABLE 1: POINTS STANDINGS                          -->
@@ -43,7 +43,7 @@
                 <th>#</th>
                 <th>Racer</th>
                 <th>Points</th>
-                <th>Event Wins</th>
+                <th>Wins</th>
                 <th>Δ</th>
             </tr>
         </thead>
@@ -52,7 +52,7 @@
 </div>
 
 <!-- =================================================== -->
-<!--  TABLE 2: RACE STATS                                -->
+<!--  TABLE 2: SEASON RACE STATS                         -->
 <!-- =================================================== -->
 <div class="table-container" style="margin-top: 35px;">
     <h2 style="text-align:center; margin-top:0;">Season Race Stats</h2>
@@ -62,77 +62,92 @@
             <tr>
                 <th>Racer</th>
                 <th>Races Attended</th>
-                <th>Round Wins</th>
-                <th>Event Wins</th>
+                <th>Semis</th>
+                <th>2nd Place</th>
+                <th>Wins</th>
             </tr>
         </thead>
         <tbody id="stats-body"></tbody>
     </table>
 </div>
 
-<!-- =================================================== -->
-<!--  SCRIPTS                                            -->
-<!-- =================================================== -->
 <script>
+/*
+=========================================================
+POINTS SETTINGS (EDIT HERE IF RULES CHANGE)
+=========================================================
+*/
+const SEMIS_PTS = 10;
+const SECOND_PTS = 15;
+const WIN_PTS = 20;
+
 /*
 =========================================================
 EDIT THIS SECTION ONLY DURING THE SEASON ✅
 - Add/remove drivers
-- Update attended / roundWins / eventWins / points
+- Update attended / semis / second / wins
 =========================================================
 */
 const drivers = [
-    { name: "Paul",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Andy",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Scotty",  attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Kitzy",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Maples",  attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Braidyn", attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Conor",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Matt",    attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    { name: "Joey",    attended: 0, roundWins: 0, eventWins: 0, points: 0 }
+    { name: "Paul",    attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Andy",    attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Scotty",  attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Kitzy",   attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Maples",  attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Braidyn", attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Conor",   attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Matt",    attended: 0, semis: 0, second: 0, wins: 0 },
+    { name: "Joey",    attended: 0, semis: 0, second: 0, wins: 0 }
 ];
 
 /*
 =========================================================
 OPTIONAL: Δ MOVEMENT TRACKING
-- Put last update’s ORDERED standings snapshot here.
-- You only need name + points + eventWins (for tie-break).
-- If you don’t care about Δ, set previousStandings = [].
+- Paste LAST UPDATE'S *sorted standings snapshot* here.
+- If you don’t care about Δ, leave it as [] and it’ll show "—".
 =========================================================
 */
-const previousStandings =[
-    //{ name: "Paul",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Andy",    attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Scotty",  attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Kitzy",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Maples",  attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Braidyn", attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Conor",   attended: 0, roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Matt",    attended: 0,  roundWins: 0, eventWins: 0, points: 0 },
-    //{ name: "Joey",    attended: 0, roundWins: 0, eventWins: 0, points: 0 }
+const previousStandings = [
+    // Example:
+    // { name: "Paul", points: 75, wins: 2 },
+    // { name: "Braidyn", points: 60, wins: 1 },
 ];
 
-// ===================================================
-// Build CURRENT standings from drivers list
-// ===================================================
+/*
+=========================================================
+AUTO-CALCULATE POINTS ✅
+points = semis*10 + second*15 + wins*20
+=========================================================
+*/
+drivers.forEach(d => {
+    d.points = (d.semis * SEMIS_PTS) + (d.second * SECOND_PTS) + (d.wins * WIN_PTS);
+});
+
+/*
+=========================================================
+BUILD & SORT CURRENT STANDINGS
+Sort: points desc, then wins desc, then name asc
+=========================================================
+*/
 const currentStandings = drivers.map(d => ({
     name: d.name,
     points: d.points,
-    eventWins: d.eventWins
+    wins: d.wins
 }));
 
-// Sort standings: Points desc, then Event Wins desc, then Name asc
 currentStandings.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points;
-    if (b.eventWins !== a.eventWins) return b.eventWins - a.eventWins;
+    if (b.wins !== a.wins) return b.wins - a.wins;
     return a.name.localeCompare(b.name);
 });
 
-// Assign positions
 currentStandings.forEach((r, i) => r.position = i + 1);
 
-// Δ movement (based on position change)
+/*
+=========================================================
+Δ MOVEMENT (position change)
+=========================================================
+*/
 currentStandings.forEach(r => {
     if (!previousStandings || previousStandings.length === 0) {
         r.delta = "—";
@@ -153,7 +168,11 @@ currentStandings.forEach(r => {
     else r.delta = "0";
 });
 
-// Render standings table
+/*
+=========================================================
+RENDER STANDINGS TABLE
+=========================================================
+*/
 const standingsBody = document.getElementById("standings-body");
 
 currentStandings.forEach(r => {
@@ -176,19 +195,23 @@ currentStandings.forEach(r => {
         <td>${r.position}</td>
         <td>${r.name}</td>
         <td>${r.points}</td>
-        <td>${r.eventWins}</td>
+        <td>${r.wins}</td>
         <td>${deltaDisplay}</td>
     `;
     standingsBody.appendChild(row);
 });
 
-// ===================================================
-// Render stats table (sort by attended desc, then name)
-// ===================================================
+/*
+=========================================================
+RENDER STATS TABLE
+Sort: attended desc, then wins desc, then name asc
+=========================================================
+*/
 const statsBody = document.getElementById("stats-body");
 
 const statsSorted = [...drivers].sort((a, b) => {
     if (b.attended !== a.attended) return b.attended - a.attended;
+    if (b.wins !== a.wins) return b.wins - a.wins;
     return a.name.localeCompare(b.name);
 });
 
@@ -197,8 +220,9 @@ statsSorted.forEach(d => {
     row.innerHTML = `
         <td>${d.name}</td>
         <td>${d.attended}</td>
-        <td>${d.roundWins}</td>
-        <td>${d.eventWins}</td>
+        <td>${d.semis}</td>
+        <td>${d.second}</td>
+        <td>${d.wins}</td>
     `;
     statsBody.appendChild(row);
 });
@@ -206,5 +230,3 @@ statsSorted.forEach(d => {
 
 </body>
 </html>
-
-
