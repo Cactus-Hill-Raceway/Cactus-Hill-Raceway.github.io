@@ -29,7 +29,7 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<p class="updated">Last updated: 01/23/2026</p>
+<p class="updated">Last updated: 01/29/2026</p>
 
 <!-- =================================================== -->
 <!--  TABLE 1: POINTS STANDINGS                          -->
@@ -89,17 +89,17 @@ EDIT THIS SECTION ONLY DURING THE SEASON ✅
 =========================================================
 */
 const drivers = [
-    { name: "Paul",    attended: 3, semis: 2, second: 0, wins: 0 },
+    { name: "Paul",    attended: 4, semis: 2, second: 0, wins: 0 },
     { name: "Andy",    attended: 2, semis: 0, second: 0, wins: 0 },
-    { name: "Scotty",  attended: 2, semis: 0, second: 1, wins: 0 },
-    { name: "Kitzy",   attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Maples",  attended: 3, semis: 3, second: 0, wins: 0 },
+    { name: "Scotty",  attended: 3, semis: 1, second: 1, wins: 0 },
+    { name: "Kitzy",   attended: 4, semis: 1, second: 0, wins: 0 },
+    { name: "Maples",  attended: 4, semis: 3, second: 0, wins: 1 },
     { name: "Braidyn", attended: 2, semis: 0, second: 1, wins: 0 },
-    { name: "Conor",   attended: 3, semis: 0, second: 1, wins: 2 },
-    { name: "Matt",    attended: 1, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 3, semis: 0, second: 0, wins: 1 },
+    { name: "Conor",   attended: 4, semis: 0, second: 1, wins: 2 },
+    { name: "Matt",    attended: 2, semis: 0, second: 0, wins: 0 },
+    { name: "Joey",    attended: 4, semis: 0, second: 0, wins: 1 },
     { name: "Bob",    attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Nick",    attended: 1, semis: 0, second: 0, wins: 0 },
+    { name: "Nick",    attended: 2, semis: 0, second: 1, wins: 0 },
     { name: "Wally",    attended: 0, semis: 0, second: 0, wins: 0 }
 ];
 
@@ -111,16 +111,16 @@ OPTIONAL: Δ MOVEMENT TRACKING
 =========================================================
 */
 const previousStandings = [
-    { name: "Paul",    attended: 2, semis: 2, second: 0, wins: 0 },
-    { name: "Andy",    attended: 1, semis: 0, second: 0, wins: 0 },
+    { name: "Paul",    attended: 3, semis: 2, second: 0, wins: 0 },
+    { name: "Andy",    attended: 2, semis: 0, second: 0, wins: 0 },
     { name: "Scotty",  attended: 2, semis: 0, second: 1, wins: 0 },
-    { name: "Kitzy",   attended: 2, semis: 0, second: 0, wins: 0 },
-    { name: "Maples",  attended: 2, semis: 2, second: 0, wins: 0 },
+    { name: "Kitzy",   attended: 3, semis: 0, second: 0, wins: 0 },
+    { name: "Maples",  attended: 3, semis: 3, second: 0, wins: 0 },
     { name: "Braidyn", attended: 2, semis: 0, second: 1, wins: 0 },
-    { name: "Conor",   attended: 2, semis: 0, second: 0, wins: 2 },
+    { name: "Conor",   attended: 3, semis: 0, second: 1, wins: 2 },
     { name: "Matt",    attended: 1, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 2, semis: 0, second: 0, wins: 0 },
-    { name: "Bob",    attended: 2, semis: 0, second: 0, wins: 0 },
+    { name: "Joey",    attended: 3, semis: 0, second: 0, wins: 1 },
+    { name: "Bob",    attended: 3, semis: 0, second: 0, wins: 0 },
     { name: "Nick",    attended: 1, semis: 0, second: 0, wins: 0 },
     { name: "Wally",    attended: 0, semis: 0, second: 0, wins: 0 }
 ];
@@ -241,6 +241,7 @@ statsSorted.forEach(d => {
 
 </body>
 </html>
+
 
 
 
