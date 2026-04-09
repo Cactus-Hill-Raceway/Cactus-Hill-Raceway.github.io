@@ -44,7 +44,6 @@
                 <th>Racer</th>
                 <th>Points</th>
                 <th>Wins</th>
-                <th>Δ</th>
             </tr>
         </thead>
         <tbody id="standings-body"></tbody>
@@ -206,7 +205,6 @@ currentStandings.forEach(r => {
         <td>${r.name}</td>
         <td>${r.points}</td>
         <td>${r.wins}</td>
-        <td>${deltaDisplay}</td>
     `;
     standingsBody.appendChild(row);
 });
