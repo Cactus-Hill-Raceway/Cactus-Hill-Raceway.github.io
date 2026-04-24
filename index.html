@@ -88,6 +88,27 @@ EDIT THIS SECTION ONLY DURING THE SEASON ✅
 =========================================================
 */
 const drivers = [
+    { name: "Paul",    attended: 12, semis: 4, second: 1, wins: 4 },
+    { name: "Andy",    attended: 7, semis: 0, second: 0, wins: 0 },
+    { name: "Scotty",  attended: 9, semis: 1, second: 1, wins: 0 },
+    { name: "Kitzy",   attended: 10, semis: 2, second: 0, wins: 0 },
+    { name: "Maples",  attended: 11, semis: 4, second: 4, wins: 4 },
+    { name: "Braidyn", attended: 9, semis: 0, second: 2, wins: 1 },
+    { name: "Conor",   attended: 11, semis: 1, second: 3, wins: 2 },
+    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
+    { name: "Joey",    attended: 8, semis: 2, second: 0, wins: 1 },
+    { name: "Bob",    attended: 9, semis: 1, second: 0, wins: 0 },
+    { name: "Nick",    attended: 7, semis: 2, second: 1, wins: 1 },
+    { name: "Wally",    attended: 5, semis: 2, second: 1, wins: 0 }
+];
+/*
+=========================================================
+OPTIONAL: Δ MOVEMENT TRACKING
+- Paste LAST UPDATE'S *sorted standings snapshot* here.
+- If you don’t care about Δ, leave it as [] and it’ll show "—".
+=========================================================
+*/
+const previousStandings = [
     { name: "Paul",    attended: 11, semis: 4, second: 0, wins: 4 },
     { name: "Andy",    attended: 7, semis: 0, second: 0, wins: 0 },
     { name: "Scotty",  attended: 9, semis: 1, second: 1, wins: 0 },
@@ -101,28 +122,7 @@ const drivers = [
     { name: "Nick",    attended: 7, semis: 2, second: 1, wins: 1 },
     { name: "Wally",    attended: 4, semis: 1, second: 1, wins: 0 }
 ];
-
 /*
-=========================================================
-OPTIONAL: Δ MOVEMENT TRACKING
-- Paste LAST UPDATE'S *sorted standings snapshot* here.
-- If you don’t care about Δ, leave it as [] and it’ll show "—".
-=========================================================
-*/
-const previousStandings = [
-    { name: "Paul",    attended: 10, semis: 4, second: 0, wins: 3 },
-    { name: "Andy",    attended: 7, semis: 0, second: 0, wins: 0 },
-    { name: "Scotty",  attended: 9, semis: 1, second: 1, wins: 0 },
-    { name: "Kitzy",   attended: 8, semis: 1, second: 0, wins: 0 },
-    { name: "Maples",  attended: 9, semis: 3, second: 4, wins: 3 },
-    { name: "Braidyn", attended: 7, semis: 0, second: 2, wins: 1 },
-    { name: "Conor",   attended: 9, semis: 1, second: 3, wins: 2 },
-    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 8, semis: 2, second: 0, wins: 1 },
-    { name: "Bob",    attended: 9, semis: 1, second: 0, wins: 0 },
-    { name: "Nick",    attended: 6, semis: 2, second: 1, wins: 1 },
-    { name: "Wally",    attended: 3, semis: 1, second: 0, wins: 0 }
-];/*
 =========================================================
 AUTO-CALCULATE POINTS ✅
 points = semis*10 + second*15 + wins*20
