@@ -29,7 +29,7 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<p class="updated">Last updated: 05/31/2026</p>
+<p class="updated">Last updated: 06/10/2026</p>
 
 <!-- =================================================== -->
 <!--  TABLE 1: POINTS STANDINGS                          -->
@@ -88,6 +88,27 @@ EDIT THIS SECTION ONLY DURING THE SEASON ✅
 =========================================================
 */
 const drivers = [
+    { name: "Paul",    attended: 17, semis: 4, second: 2, wins: 6 },
+    { name: "Andy",    attended: 9, semis: 0, second: 0, wins: 0 },
+    { name: "Scotty",  attended: 14, semis: 2, second: 2, wins: 1 },
+    { name: "Kitzy",   attended: 13, semis: 3, second: 1, wins: 0 },
+    { name: "Maples",  attended: 15, semis: 7, second: 5, wins: 4 },
+    { name: "Braidyn", attended: 10, semis: 0, second: 2, wins: 1 },
+    { name: "Conor",   attended: 14, semis: 2, second: 4, wins: 2 },
+    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
+    { name: "Joey",    attended: 12, semis: 3, second: 0, wins: 1 },
+    { name: "Bob",    attended: 13, semis: 2, second: 0, wins: 0 },
+    { name: "Nick",    attended: 11, semis: 2, second: 1, wins: 3 },
+    { name: "Wally",    attended: 10, semis: 3, second: 1, wins: 0 }
+];
+/*
+=========================================================
+OPTIONAL: Δ MOVEMENT TRACKING
+- Paste LAST UPDATE'S *sorted standings snapshot* here.
+- If you don’t care about Δ, leave it as [] and it’ll show "—".
+=========================================================
+*/
+const previousStandings =  [
     { name: "Paul",    attended: 16, semis: 4, second: 1, wins: 6 },
     { name: "Andy",    attended: 9, semis: 0, second: 0, wins: 0 },
     { name: "Scotty",  attended: 13, semis: 2, second: 2, wins: 1 },
@@ -101,27 +122,7 @@ const drivers = [
     { name: "Nick",    attended: 10, semis: 2, second: 1, wins: 2 },
     { name: "Wally",    attended: 9, semis: 3, second: 1, wins: 0 }
 ];
-/*
-=========================================================
-OPTIONAL: Δ MOVEMENT TRACKING
-- Paste LAST UPDATE'S *sorted standings snapshot* here.
-- If you don’t care about Δ, leave it as [] and it’ll show "—".
-=========================================================
-*/
-const previousStandings = [
-    { name: "Paul",    attended: 14, semis: 4, second: 1, wins: 5 },
-    { name: "Andy",    attended: 9, semis: 0, second: 0, wins: 0 },
-    { name: "Scotty",  attended: 11, semis: 1, second: 2, wins: 1 },
-    { name: "Kitzy",   attended: 11, semis: 3, second: 0, wins: 0 },
-    { name: "Maples",  attended: 12, semis: 4, second: 5, wins: 4 },
-    { name: "Braidyn", attended: 10, semis: 0, second: 2, wins: 1 },
-    { name: "Conor",   attended: 13, semis: 2, second: 3, wins: 2 },
-    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 9, semis: 3, second: 0, wins: 1 },
-    { name: "Bob",    attended: 11, semis: 1, second: 0, wins: 0 },
-    { name: "Nick",    attended: 8, semis: 2, second: 1, wins: 1 },
-    { name: "Wally",    attended: 7, semis: 3, second: 1, wins: 0 }
-];
+
 /*
 =========================================================
 AUTO-CALCULATE POINTS ✅
