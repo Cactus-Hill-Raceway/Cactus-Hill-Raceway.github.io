@@ -10,12 +10,17 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- CSV Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
+
 <body>
 
 <!-- Banner -->
 <header class="banner">
     <img src="images/logo.PNG" alt="Cactus Hill Logo" class="banner-logo">
+
     <div class="banner-content">
         <h1>Cactus Hill Raceway</h1>
         <h2>Season Standings</h2>
@@ -29,15 +34,20 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<p class="updated">Last updated: 09/01/2026</p>
+<p class="updated">Loading race data...</p>
 
 <!-- =================================================== -->
-<!--  TABLE 1: POINTS STANDINGS                          -->
+<!-- POINTS STANDINGS                                    -->
 <!-- =================================================== -->
+
 <div class="table-container">
-    <h2 style="text-align:center; margin-top:0;">Season Points Standings</h2>
+
+    <h2 style="text-align:center; margin-top:0;">
+        Season Points Standings
+    </h2>
 
     <table class="leaderboard">
+
         <thead>
             <tr>
                 <th>#</th>
@@ -46,17 +56,26 @@
                 <th>Wins</th>
             </tr>
         </thead>
+
         <tbody id="standings-body"></tbody>
+
     </table>
+
 </div>
 
+
 <!-- =================================================== -->
-<!--  TABLE 2: SEASON RACE STATS                         -->
+<!-- SEASON RACE STATS                                   -->
 <!-- =================================================== -->
-<div class="table-container" style="margin-top: 35px;">
-    <h2 style="text-align:center; margin-top:0;">Season Race Stats</h2>
+
+<div class="table-container" style="margin-top:35px;">
+
+    <h2 style="text-align:center; margin-top:0;">
+        Season Race Stats
+    </h2>
 
     <table class="leaderboard">
+
         <thead>
             <tr>
                 <th>Racer</th>
@@ -66,184 +85,502 @@
                 <th>Wins</th>
             </tr>
         </thead>
+
         <tbody id="stats-body"></tbody>
+
     </table>
+
 </div>
 
+
 <script>
-/*
-=========================================================
-POINTS SETTINGS (EDIT HERE IF RULES CHANGE)
-=========================================================
-*/
-const SEMIS_PTS = 10;
-const SECOND_PTS = 15;
-const WIN_PTS = 20;
 
 /*
 =========================================================
-EDIT THIS SECTION ONLY DURING THE SEASON ✅
-- Add/remove drivers
-- Update attended / semis / second / wins
+CACTUS HILL RACEWAY
+AUTOMATIC STANDINGS SYSTEM
 =========================================================
 */
-const drivers = [
-    { name: "Paul",    attended: 24, semis: 6, second: 5, wins: 6 },
-    { name: "Andy",    attended: 11, semis: 0, second: 0, wins: 0 },
-    { name: "Scotty",  attended: 21, semis: 3, second: 2, wins: 3 },
-    { name: "Kitzy",   attended: 18, semis: 4, second: 2, wins: 0 },
-    { name: "Maples",  attended: 22, semis: 9, second: 5, wins: 6 },
-    { name: "Braidyn", attended: 14, semis: 1, second: 2, wins: 2 },
-    { name: "Conor",   attended: 20, semis: 3, second: 6, wins: 2 },
-    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 14, semis: 3, second: 0, wins: 1 },
-    { name: "Bob",    attended: 17, semis: 4, second: 0, wins: 0 },
-    { name: "Nick",    attended: 15, semis: 2, second: 2, wins: 5 },
-    { name: "Wally",    attended: 17, semis: 4, second: 1, wins: 0 }
-];
-/*
-=========================================================
-OPTIONAL: Δ MOVEMENT TRACKING
-- Paste LAST UPDATE'S *sorted standings snapshot* here.
-- If you don’t care about Δ, leave it as [] and it’ll show "—".
-=========================================================
-*/
-const previousStandings =  [
-    { name: "Paul",    attended: 16, semis: 4, second: 1, wins: 6 },
-    { name: "Andy",    attended: 9, semis: 0, second: 0, wins: 0 },
-    { name: "Scotty",  attended: 13, semis: 2, second: 2, wins: 1 },
-    { name: "Kitzy",   attended: 12, semis: 3, second: 1, wins: 0 },
-    { name: "Maples",  attended: 14, semis: 6, second: 5, wins: 4 },
-    { name: "Braidyn", attended: 10, semis: 0, second: 2, wins: 1 },
-    { name: "Conor",   attended: 14, semis: 2, second: 4, wins: 2 },
-    { name: "Matt",    attended: 3, semis: 0, second: 0, wins: 0 },
-    { name: "Joey",    attended: 11, semis: 3, second: 0, wins: 1 },
-    { name: "Bob",    attended: 12, semis: 1, second: 0, wins: 0 },
-    { name: "Nick",    attended: 10, semis: 2, second: 1, wins: 2 },
-    { name: "Wally",    attended: 9, semis: 3, second: 1, wins: 0 }
-];
 
-/*
-=========================================================
-AUTO-CALCULATE POINTS ✅
-points = semis*10 + second*15 + wins*20
-=========================================================
-*/
-drivers.forEach(d => {
-    d.points = (d.semis * SEMIS_PTS) + (d.second * SECOND_PTS) + (d.wins * WIN_PTS);
-});
 
-/*
-=========================================================
-BUILD & SORT CURRENT STANDINGS
-Sort: points desc, then wins desc, then name asc
-=========================================================
-*/
-const currentStandings = drivers.map(d => ({
-    name: d.name,
-    points: d.points,
-    wins: d.wins
-}));
+// ======================================================
+// ACTIVE SEASON
+// ======================================================
 
-currentStandings.sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    if (b.wins !== a.wins) return b.wins - a.wins;
-    return a.name.localeCompare(b.name);
-});
+const ACTIVE_SEASON = 2026;
 
-currentStandings.forEach((r, i) => r.position = i + 1);
 
-/*
-=========================================================
-Δ MOVEMENT (position change)
-=========================================================
-*/
-currentStandings.forEach(r => {
-    if (!previousStandings || previousStandings.length === 0) {
-        r.delta = "—";
+// ======================================================
+// POINT VALUES
+// ======================================================
+
+const SEMI_POINTS = 10;
+const SECOND_POINTS = 15;
+const WIN_POINTS = 20;
+
+
+// ======================================================
+// GOOGLE SHEET URLS
+// ======================================================
+
+// New races submitted through Google Form
+
+const RACE_DATA_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTno2jm6fy4iROcsMtCt66-7AB8zP_xyMthboS718T6Yq_FlnCg9IJO1P1KX0auZhdsjF2VFP0Ypo4H/pub?gid=118158032&single=true&output=csv";
+
+
+// 2026 totals from BEFORE switching to Google Forms
+
+const STARTING_TOTALS_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTno2jm6fy4iROcsMtCt66-7AB8zP_xyMthboS718T6Yq_FlnCg9IJO1P1KX0auZhdsjF2VFP0Ypo4H/pub?gid=1110429940&single=true&output=csv";
+
+
+// ======================================================
+// SPLIT GOOGLE FORM CHECKBOX RESPONSES
+// ======================================================
+
+function splitNames(value) {
+
+    if (!value) {
+        return [];
+    }
+
+    return value
+        .split(",")
+        .map(name => name.trim())
+        .filter(name => name !== "");
+}
+
+
+// ======================================================
+// CREATE RACER IF THEY DO NOT ALREADY EXIST
+// ======================================================
+
+function ensureDriver(drivers, name) {
+
+    if (!name) {
         return;
     }
 
-    const oldIndex = previousStandings.findIndex(x => x.name === r.name);
-    if (oldIndex === -1) {
-        r.delta = "NEW";
-        return;
+    if (!drivers[name]) {
+
+        drivers[name] = {
+
+            name: name,
+            attended: 0,
+            semis: 0,
+            second: 0,
+            wins: 0,
+            points: 0
+
+        };
+
+    }
+}
+
+
+// ======================================================
+// LOAD CSV FILE
+// ======================================================
+
+function loadCSV(url) {
+
+    return new Promise((resolve, reject) => {
+
+        Papa.parse(url, {
+
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+
+            complete: function(results) {
+                resolve(results.data);
+            },
+
+            error: function(error) {
+                reject(error);
+            }
+
+        });
+
+    });
+
+}
+
+
+// ======================================================
+// BUILD STANDINGS
+// ======================================================
+
+async function buildStandings() {
+
+    try {
+
+        /*
+        --------------------------------------------------
+        LOAD BOTH GOOGLE SHEETS
+        --------------------------------------------------
+        */
+
+        const [
+            startingTotals,
+            raceResponses
+        ] = await Promise.all([
+
+            loadCSV(STARTING_TOTALS_URL),
+            loadCSV(RACE_DATA_URL)
+
+        ]);
+
+
+        const drivers = {};
+
+
+        /*
+        --------------------------------------------------
+        LOAD 2026 STARTING TOTALS
+        --------------------------------------------------
+        */
+
+        startingTotals.forEach(row => {
+
+            const name =
+                (row["Racer"] || "").trim();
+
+            if (!name) {
+                return;
+            }
+
+            ensureDriver(drivers, name);
+
+
+            drivers[name].attended =
+                Number(row["Races Attended"]) || 0;
+
+            drivers[name].semis =
+                Number(row["Semis"]) || 0;
+
+            drivers[name].second =
+                Number(row["2nd Place"]) || 0;
+
+            drivers[name].wins =
+                Number(row["Wins"]) || 0;
+
+
+            /*
+            Starting points are calculated automatically
+            from the historical stats.
+            */
+
+            drivers[name].points =
+                (drivers[name].semis * SEMI_POINTS) +
+                (drivers[name].second * SECOND_POINTS) +
+                (drivers[name].wins * WIN_POINTS);
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        FILTER FORM RESPONSES TO 2026
+        --------------------------------------------------
+        */
+
+        const seasonRaces = raceResponses.filter(row => {
+
+            return Number(row["Season"]) === ACTIVE_SEASON;
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        PROCESS EVERY NEW RACE
+        --------------------------------------------------
+        */
+
+        seasonRaces.forEach(race => {
+
+            const attending =
+                splitNames(race["Racers Attending"]);
+
+            const semiFinishers =
+                splitNames(race["Semi - Final Finishers"]);
+
+            const secondPlace =
+                (race["Second Place"] || "").trim();
+
+            const winner =
+                (race["Race Winner"] || "").trim();
+
+
+            /*
+            ----------------------------------------------
+            ATTENDANCE
+            ----------------------------------------------
+            */
+
+            attending.forEach(name => {
+
+                ensureDriver(drivers, name);
+
+                drivers[name].attended++;
+
+            });
+
+
+            /*
+            ----------------------------------------------
+            SEMI-FINAL FINISHERS
+
+            These should ONLY be racers eliminated
+            in the semifinal round.
+            ----------------------------------------------
+            */
+
+            semiFinishers.forEach(name => {
+
+                ensureDriver(drivers, name);
+
+                drivers[name].semis++;
+
+                drivers[name].points += SEMI_POINTS;
+
+            });
+
+
+            /*
+            ----------------------------------------------
+            SECOND PLACE
+            ----------------------------------------------
+            */
+
+            if (secondPlace) {
+
+                ensureDriver(drivers, secondPlace);
+
+                drivers[secondPlace].second++;
+
+                drivers[secondPlace].points += SECOND_POINTS;
+
+            }
+
+
+            /*
+            ----------------------------------------------
+            RACE WINNER
+            ----------------------------------------------
+            */
+
+            if (winner) {
+
+                ensureDriver(drivers, winner);
+
+                drivers[winner].wins++;
+
+                drivers[winner].points += WIN_POINTS;
+
+            }
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        CONVERT RACER OBJECT TO ARRAY
+        --------------------------------------------------
+        */
+
+        const standings =
+            Object.values(drivers);
+
+
+        /*
+        --------------------------------------------------
+        SORT POINT STANDINGS
+
+        1. Points
+        2. Wins
+        3. Second-place finishes
+        4. Semi finishes
+        5. Name
+        --------------------------------------------------
+        */
+
+        standings.sort((a, b) => {
+
+            if (b.points !== a.points) {
+                return b.points - a.points;
+            }
+
+            if (b.wins !== a.wins) {
+                return b.wins - a.wins;
+            }
+
+            if (b.second !== a.second) {
+                return b.second - a.second;
+            }
+
+            if (b.semis !== a.semis) {
+                return b.semis - a.semis;
+            }
+
+            return a.name.localeCompare(b.name);
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        ASSIGN POSITIONS
+        --------------------------------------------------
+        */
+
+        standings.forEach((driver, index) => {
+
+            driver.position = index + 1;
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        BUILD POINT STANDINGS TABLE
+        --------------------------------------------------
+        */
+
+        const standingsBody =
+            document.getElementById("standings-body");
+
+        standingsBody.innerHTML = "";
+
+
+        standings.forEach(driver => {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+
+                <td>${driver.position}</td>
+
+                <td>${driver.name}</td>
+
+                <td>${driver.points}</td>
+
+                <td>${driver.wins}</td>
+
+            `;
+
+            standingsBody.appendChild(row);
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        BUILD SEASON STATS TABLE
+        --------------------------------------------------
+        */
+
+        const statsBody =
+            document.getElementById("stats-body");
+
+        statsBody.innerHTML = "";
+
+
+        /*
+        Keep the stats table in points-standing order.
+        */
+
+        standings.forEach(driver => {
+
+            const row =
+                document.createElement("tr");
+
+            row.innerHTML = `
+
+                <td>${driver.name}</td>
+
+                <td>${driver.attended}</td>
+
+                <td>${driver.semis}</td>
+
+                <td>${driver.second}</td>
+
+                <td>${driver.wins}</td>
+
+            `;
+
+            statsBody.appendChild(row);
+
+        });
+
+
+        /*
+        --------------------------------------------------
+        LAST UPDATED DATE
+        --------------------------------------------------
+        */
+
+        const updatedElement =
+            document.querySelector(".updated");
+
+
+        if (seasonRaces.length > 0) {
+
+            const latestRace =
+                seasonRaces[seasonRaces.length - 1];
+
+            if (latestRace["Race Date"]) {
+
+                updatedElement.textContent =
+                    "Last updated: " +
+                    latestRace["Race Date"];
+
+            }
+
+        }
+
+        else {
+
+            updatedElement.textContent =
+                "2026 Season Standings";
+
+        }
+
     }
 
-    const oldPos = oldIndex + 1;
-    const newPos = r.position;
 
-    if (newPos < oldPos) r.delta = "+" + (oldPos - newPos);
-    else if (newPos > oldPos) r.delta = "-" + (newPos - oldPos);
-    else r.delta = "0";
-});
+    /*
+    ------------------------------------------------------
+    ERROR HANDLING
+    ------------------------------------------------------
+    */
 
-/*
-=========================================================
-RENDER STANDINGS TABLE
-=========================================================
-*/
-const standingsBody = document.getElementById("standings-body");
+    catch (error) {
 
-currentStandings.forEach(r => {
-    let deltaDisplay = r.delta;
+        console.error(
+            "Unable to load race data:",
+            error
+        );
 
-    if (r.delta && r.delta.startsWith("+")) {
-        deltaDisplay = `<span style="color:#0A8A0A;font-weight:bold">${r.delta}</span>`;
-    } else if (r.delta && r.delta.startsWith("-")) {
-        deltaDisplay = `<span style="color:#C40000;font-weight:bold">${r.delta}</span>`;
-    } else if (r.delta === "NEW") {
-        deltaDisplay = `<span style="color:#D4A017;font-weight:bold">NEW</span>`;
-    } else if (r.delta === "0") {
-        deltaDisplay = `<span style="color:#777">0</span>`;
-    } else {
-        deltaDisplay = `<span style="color:#777">—</span>`;
+
+        document.querySelector(".updated").textContent =
+            "Unable to load race data.";
+
     }
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${r.position}</td>
-        <td>${r.name}</td>
-        <td>${r.points}</td>
-        <td>${r.wins}</td>
-    `;
-    standingsBody.appendChild(row);
-});
+}
 
-/*
-=========================================================
-RENDER STATS TABLE
-Sort: attended desc, then wins desc, then name asc
-=========================================================
-*/
-const statsBody = document.getElementById("stats-body");
 
-const statsSorted = [...drivers].sort((a, b) => {
-    if (b.attended !== a.attended) return b.attended - a.attended;
-    if (b.wins !== a.wins) return b.wins - a.wins;
-    return a.name.localeCompare(b.name);
-});
+// ======================================================
+// START WEBSITE
+// ======================================================
 
-statsSorted.forEach(d => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${d.name}</td>
-        <td>${d.attended}</td>
-        <td>${d.semis}</td>
-        <td>${d.second}</td>
-        <td>${d.wins}</td>
-    `;
-    statsBody.appendChild(row);
-});
+buildStandings();
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
