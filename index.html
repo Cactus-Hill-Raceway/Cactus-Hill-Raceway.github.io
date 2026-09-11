@@ -288,7 +288,9 @@ async function buildStandings() {
 
         const seasonRaces = raceResponses.filter(row => {
 
-            return Number(row["Season"]) === ACTIVE_SEASON;
+        const raceDate = new Date(row["Race Date"]);
+
+        return raceDate.getFullYear() === ACTIVE_SEASON;
 
         });
 
