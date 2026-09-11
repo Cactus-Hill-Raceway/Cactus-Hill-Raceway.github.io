@@ -377,9 +377,13 @@ Papa.parse(RACE_DATA_URL, {
         */
 
         const races = results.data
-            .filter(race =>
-                Number(race["Season"]) === ACTIVE_SEASON
-            )
+            .filter(race => {
+
+                const raceDate = new Date(race["Race Date"]);
+
+                return raceDate.getFullYear() === ACTIVE_SEASON;
+
+            })
             .sort((a, b) =>
                 raceDateValue(b["Race Date"]) -
                 raceDateValue(a["Race Date"])
