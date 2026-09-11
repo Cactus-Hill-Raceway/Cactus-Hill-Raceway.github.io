@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Race Results</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- CSV Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
+
 <body>
-//kj
+
 <header class="banner">
     <img src="images/logo.PNG" alt="Cactus Hill Logo" class="banner-logo">
+
     <div class="banner-content">
         <h1>Cactus Hill Raceway</h1>
         <h2>Race Results</h2>
     </div>
 </header>
+
 
 <nav class="navbar">
     <a href="index.html">Standings</a>
@@ -23,193 +32,518 @@
     <a href="rules.html">Rules</a>
 </nav>
 
-<!-- ===================== -->
-<!--  2026 RESULTS         -->
-<!-- ===================== -->
+
+<!-- =================================================== -->
+<!-- 2026 RESULTS                                        -->
+<!-- =================================================== -->
+
 <div class="results-section">
+
     <h2 class="results-year">2026</h2>
-    <div class="gallery">
+
+    <!--
+    New Google Form results will automatically
+    be inserted at the TOP of this gallery.
+
+    Your existing 2026 results remain underneath.
+    -->
+
+    <div class="gallery" id="results-2026">
+
+
+        <!-- ============================================= -->
+        <!-- EXISTING 2026 RESULTS                         -->
+        <!-- ============================================= -->
+
         <div class="gallery-item">
-        <img src="images/winners/9-20-26-Scott.jpg" alt="Race Winner">
-        <p class="winner-name">September 20 – Scott</p>
-        <p class="race-stats">ET: UNK</p>
+            <img src="images/winners/9-20-26-Scott.jpg" alt="Race Winner">
+            <p class="winner-name">September 20 – Scott</p>
+            <p class="race-stats">ET: UNK</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/8-14-26-Scott.jpg" alt="Race Winner">
-        <p class="winner-name">August 14 – Scott</p>
-        <p class="race-stats">ET: UNK</p>
+            <img src="images/winners/8-14-26-Scott.jpg" alt="Race Winner">
+            <p class="winner-name">August 14 – Scott</p>
+            <p class="race-stats">ET: UNK</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/7-30-26-Maples.jpg" alt="Race Winner">
-        <p class="winner-name">July 30 – Maples</p>
-        <p class="race-stats">ET: 1.32s • 58 MPH</p>
+            <img src="images/winners/7-30-26-Maples.jpg" alt="Race Winner">
+            <p class="winner-name">July 30 – Maples</p>
+            <p class="race-stats">ET: 1.32s • 58 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/7-16-26-Nick.jpg" alt="Race Winner">
-        <p class="winner-name">July 16 – Nick</p>
-        <p class="race-stats">ET: 1.28s • 62 MPH</p>
+            <img src="images/winners/7-16-26-Nick.jpg" alt="Race Winner">
+            <p class="winner-name">July 16 – Nick</p>
+            <p class="race-stats">ET: 1.28s • 62 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/7-09-26-Braidyn.jpg" alt="Race Winner">
-        <p class="winner-name">July 9 – Braidyn</p>
-        <p class="race-stats">ET: 1.44s • 49 MPH</p>
+            <img src="images/winners/7-09-26-Braidyn.jpg" alt="Race Winner">
+            <p class="winner-name">July 9 – Braidyn</p>
+            <p class="race-stats">ET: 1.44s • 49 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/6-18-26-Nick.jpg" alt="Race Winner">
-        <p class="winner-name">June 18 – Nick</p>
-        <p class="race-stats">ET: 1.29s • 56 MPH</p>
+            <img src="images/winners/6-18-26-Nick.jpg" alt="Race Winner">
+            <p class="winner-name">June 18 – Nick</p>
+            <p class="race-stats">ET: 1.29s • 56 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/6-11-26-Maples.jpg" alt="Race Winner">
-        <p class="winner-name">June 11 – Maples</p>
-        <p class="race-stats">ET: 1.35s • 55 MPH</p>
+            <img src="images/winners/6-11-26-Maples.jpg" alt="Race Winner">
+            <p class="winner-name">June 11 – Maples</p>
+            <p class="race-stats">ET: 1.35s • 55 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/6-4-26-Nick.jpg" alt="Race Winner">
-        <p class="winner-name">June 6 – Nick</p>
-        <p class="race-stats">ET: 1.31s • 52 MPH</p>
+            <img src="images/winners/6-4-26-Nick.jpg" alt="Race Winner">
+            <p class="winner-name">June 6 – Nick</p>
+            <p class="race-stats">ET: 1.31s • 52 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/5-21-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">May 21 – Paul</p>
-        <p class="race-stats">ET: 1.29s • 58 MPH</p>
+            <img src="images/winners/5-21-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">May 21 – Paul</p>
+            <p class="race-stats">ET: 1.29s • 58 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/5-7-26-Nick.jpg" alt="Race Winner">
-        <p class="winner-name">May 7 – Nick</p>
-        <p class="race-stats">ET: 1.24s • 63 MPH</p>
+            <img src="images/winners/5-7-26-Nick.jpg" alt="Race Winner">
+            <p class="winner-name">May 7 – Nick</p>
+            <p class="race-stats">ET: 1.24s • 63 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/4-30-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">April 30 – Paul</p>
-        <p class="race-stats">ET: Unknown</p>
+            <img src="images/winners/4-30-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">April 30 – Paul</p>
+            <p class="race-stats">ET: Unknown</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/4-23-26-Scott.jpg" alt="Race Winner">
-        <p class="winner-name">April 23 – Scott</p>
-        <p class="race-stats">ET: 1.23s • 61 MPH</p>
+            <img src="images/winners/4-23-26-Scott.jpg" alt="Race Winner">
+            <p class="winner-name">April 23 – Scott</p>
+            <p class="race-stats">ET: 1.23s • 61 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/4-16-26-Maples.jpg" alt="Race Winner">
-        <p class="winner-name">April 16 – Maples</p>
-        <p class="race-stats">ET: 1.27s • 61 MPH</p>
+            <img src="images/winners/4-16-26-Maples.jpg" alt="Race Winner">
+            <p class="winner-name">April 16 – Maples</p>
+            <p class="race-stats">ET: 1.27s • 61 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/4-9-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">April 9 – Paul</p>
-        <p class="race-stats">ET: 1.35s • 59 MPH</p>
+            <img src="images/winners/4-9-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">April 9 – Paul</p>
+            <p class="race-stats">ET: 1.35s • 59 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/4-2-26-Braidyn.jpg" alt="Race Winner">
-        <p class="winner-name">April 2 – Braidyn</p>
-        <p class="race-stats">ET: 1.28s • 55 MPH</p>
+            <img src="images/winners/4-2-26-Braidyn.jpg" alt="Race Winner">
+            <p class="winner-name">April 2 – Braidyn</p>
+            <p class="race-stats">ET: 1.28s • 55 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/3-26-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">March 26 – Paul</p>
-        <p class="race-stats">ET: 1.28s • 58 MPH</p>
+            <img src="images/winners/3-26-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">March 26 – Paul</p>
+            <p class="race-stats">ET: 1.28s • 58 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/3-13-26-Maples.jpg" alt="Race Winner">
-        <p class="winner-name">March 13 – Maples</p>
-        <p class="race-stats">ET: 1.21s • 59 MPH</p>
+            <img src="images/winners/3-13-26-Maples.jpg" alt="Race Winner">
+            <p class="winner-name">March 13 – Maples</p>
+            <p class="race-stats">ET: 1.21s • 59 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/3-05-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">March 05 – Paul</p>
-        <p class="race-stats">ET: 1.30s • 60 MPH</p>
+            <img src="images/winners/3-05-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">March 05 – Paul</p>
+            <p class="race-stats">ET: 1.30s • 60 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/2-19-26-Paul.jpg" alt="Race Winner">
-        <p class="winner-name">Feb 19 – Paul</p>
-        <p class="race-stats">ET: 1.39s • 57 MPH</p>
+            <img src="images/winners/2-19-26-Paul.jpg" alt="Race Winner">
+            <p class="winner-name">Feb 19 – Paul</p>
+            <p class="race-stats">ET: 1.39s • 57 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/2-12-26-Nick.jpg" alt="Race Winner">
-        <p class="winner-name">Feb 12 – Nick</p>
-        <p class="race-stats">ET: 1.28s • 62 MPH</p>
+            <img src="images/winners/2-12-26-Nick.jpg" alt="Race Winner">
+            <p class="winner-name">Feb 12 – Nick</p>
+            <p class="race-stats">ET: 1.28s • 62 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/1-29-26-Maples.jpg" alt="Race Winner">
-        <p class="winner-name">Jan 29 – Maples</p>
-        <p class="race-stats">ET: Unknown</p>
+            <img src="images/winners/1-29-26-Maples.jpg" alt="Race Winner">
+            <p class="winner-name">Jan 29 – Maples</p>
+            <p class="race-stats">ET: Unknown</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/1-22-26-Joey.jpg" alt="Race Winner">
-        <p class="winner-name">Jan 22 – Joey</p>
-        <p class="race-stats">ET: Unknown</p>
+            <img src="images/winners/1-22-26-Joey.jpg" alt="Race Winner">
+            <p class="winner-name">Jan 22 – Joey</p>
+            <p class="race-stats">ET: Unknown</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/1-15-26-Conor.jpg" alt="Race Winner">
-        <p class="winner-name">Jan 15 – Conor</p>
-        <p class="race-stats">ET: 1.29s • 56 MPH</p>
+            <img src="images/winners/1-15-26-Conor.jpg" alt="Race Winner">
+            <p class="winner-name">Jan 15 – Conor</p>
+            <p class="race-stats">ET: 1.29s • 56 MPH</p>
         </div>
+
         <div class="gallery-item">
-        <img src="images/winners/1-8-26-Conor.jpg" alt="Race Winner">
-        <p class="winner-name">Jan 8 – Conor</p>
-        <p class="race-stats">ET: 1.30s • 55 MPH</p>
-    </div>
+            <img src="images/winners/1-8-26-Conor.jpg" alt="Race Winner">
+            <p class="winner-name">Jan 8 – Conor</p>
+            <p class="race-stats">ET: 1.30s • 55 MPH</p>
+        </div>
 
     </div>
+
 </div>
 
-<!-- ===================== -->
-<!--  2025 RESULTS         -->
-<!-- ===================== -->
+
+<!-- =================================================== -->
+<!-- 2025 RESULTS                                        -->
+<!-- =================================================== -->
+
 <div class="results-section">
+
     <h2 class="results-year">2025</h2>
 
-    <!-- BIG centered champions card -->
+
+    <!-- 2025 CHAMPION -->
+
     <div class="champion-wrap">
+
         <div class="gallery-item champion-card">
-            <!-- Change this filename to your actual champions photo -->
-            <img src="images/winners/2025-champion.jpg" alt="2025 Champions">
-            <p><strong>2025 Champion - Scott</strong></p>
+
+            <img
+                src="images/winners/2025-champion.jpg"
+                alt="2025 Champion"
+            >
+
+            <p>
+                <strong>2025 Champion - Scott</strong>
+            </p>
+
         </div>
+
     </div>
 
-    <!-- Normal 2025 gallery (unchanged cards) -->
+
+    <!-- EXISTING 2025 RESULTS -->
+
     <div class="gallery">
+
         <div class="gallery-item">
             <img src="images/winners/12-20-25-Conor.jpg" alt="Race Winner">
             <p>Dec 20 – Conor</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/12-17-25-Paul.jpeg" alt="Race Winner">
             <p>Dec 17 – Paul</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/12-10-25-Paul.jpg" alt="Race Winner">
             <p>Dec 10 – Paul</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/12-3-25-Braidyn.jpeg" alt="Race Winner">
             <p>Dec 3 – Braidyn</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/11-19-25-Chris.jpg" alt="Race Winner">
             <p>Nov 19 – Chris</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/11-5-2025-Conor.JPEG" alt="Race Winner">
             <p>Nov 5 – Conor</p>
         </div>
+
         <div class="gallery-item">
             <img src="images/winners/11-3-25-Paul.jpg" alt="Race Winner">
             <p>Nov 3 – Paul</p>
         </div>
+
     </div>
+
 </div>
+
+
+<!-- =================================================== -->
+<!-- AUTOMATIC GOOGLE FORM RESULTS                       -->
+<!-- =================================================== -->
+
+<script>
+
+const RACE_DATA_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTno2jm6fy4iROcsMtCt66-7AB8zP_xyMthboS718T6Yq_FlnCg9IJO1P1KX0auZhdsjF2VFP0Ypo4H/pub?gid=118158032&single=true&output=csv";
+
+
+const ACTIVE_SEASON = 2026;
+
+
+/*
+=========================================================
+FORMAT DATE
+Example:
+9/10/2026 -> September 10
+=========================================================
+*/
+
+function formatRaceDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const parts = dateString.split("/");
+
+    if (parts.length !== 3) {
+        return dateString;
+    }
+
+    const month = Number(parts[0]);
+    const day = Number(parts[1]);
+    const year = Number(parts[2]);
+
+    const date = new Date(
+        year,
+        month - 1,
+        day
+    );
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            month: "long",
+            day: "numeric"
+        }
+    );
+}
+
+
+/*
+=========================================================
+CONVERT DATE TO SORTABLE VALUE
+=========================================================
+*/
+
+function raceDateValue(dateString) {
+
+    if (!dateString) {
+        return 0;
+    }
+
+    const parts = dateString.split("/");
+
+    if (parts.length !== 3) {
+        return 0;
+    }
+
+    return new Date(
+        Number(parts[2]),
+        Number(parts[0]) - 1,
+        Number(parts[1])
+    ).getTime();
+}
+
+
+/*
+=========================================================
+LOAD GOOGLE SHEET
+=========================================================
+*/
+
+Papa.parse(RACE_DATA_URL, {
+
+    download: true,
+    header: true,
+    skipEmptyLines: true,
+
+    complete: function(results) {
+
+        /*
+        -------------------------------------------------
+        ONLY USE 2026 FORM SUBMISSIONS
+        -------------------------------------------------
+        */
+
+        const races = results.data
+            .filter(race =>
+                Number(race["Season"]) === ACTIVE_SEASON
+            )
+            .sort((a, b) =>
+                raceDateValue(b["Race Date"]) -
+                raceDateValue(a["Race Date"])
+            );
+
+
+        const gallery =
+            document.getElementById("results-2026");
+
+
+        /*
+        -------------------------------------------------
+        CREATE EACH NEW WINNER CARD
+        -------------------------------------------------
+        */
+
+        races.reverse().forEach(race => {
+
+            const winner =
+                (race["Race Winner"] || "").trim();
+
+            const raceDate =
+                formatRaceDate(
+                    race["Race Date"]
+                );
+
+            const et =
+                (race["Winning ET"] || "").trim();
+
+            const mph =
+                (race["Winning MPH"] || "").trim();
+
+            const fileId =
+                (race["Photo File ID"] || "").trim();
+
+            const photoUrl =
+                (race["Photo URL"] || "").trim();
+
+
+            /*
+            Prefer Drive thumbnail URL.
+            This tends to work better for <img>.
+            */
+
+            let imageSource = photoUrl;
+
+            if (fileId) {
+
+                imageSource =
+                    "https://drive.google.com/thumbnail?id=" +
+                    encodeURIComponent(fileId) +
+                    "&sz=w1200";
+
+            }
+
+
+            /*
+            Don't create an incomplete result card.
+            */
+
+            if (!winner || !raceDate) {
+                return;
+            }
+
+
+            /*
+            Build ET / MPH text
+            */
+
+            let stats = "";
+
+            if (et && mph) {
+
+                stats =
+                    `ET: ${et}s • ${mph} MPH`;
+
+            }
+
+            else if (et) {
+
+                stats =
+                    `ET: ${et}s`;
+
+            }
+
+            else if (mph) {
+
+                stats =
+                    `${mph} MPH`;
+
+            }
+
+            else {
+
+                stats =
+                    "ET: Unknown";
+
+            }
+
+
+            /*
+            Build result card
+            */
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "gallery-item automated-result";
+
+
+            let imageHTML = "";
+
+            if (imageSource) {
+
+                imageHTML = `
+                    <img
+                        src="${imageSource}"
+                        alt="${winner} Race Winner"
+                    >
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                ${imageHTML}
+
+                <p class="winner-name">
+                    ${raceDate} – ${winner}
+                </p>
+
+                <p class="race-stats">
+                    ${stats}
+                </p>
+
+            `;
+
+
+            /*
+            Add new Form result BEFORE existing cards.
+            */
+
+            gallery.prepend(card);
+
+        });
+
+    },
+
+
+    error: function(error) {
+
+        console.error(
+            "Unable to load race results:",
+            error
+        );
+
+    }
+
+});
+
+</script>
+
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
